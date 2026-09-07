@@ -1,0 +1,13 @@
+# Define o comportamento padrão para tratar arquivos de texto automaticamente [5]
+* text=auto
+
+# Declara explicitamente os arquivos de código que devem ser normalizados para LF no repositório [5]
+*.ts text
+*.tsx text
+*.js text
+*.json text
+*.md text
+
+# Garante que arquivos de imagem e binários não sejam modificados [5]
+*.png binary
+*.jpg binary
