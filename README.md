@@ -28,7 +28,7 @@ O aplicativo é desenvolvido com React Native e Expo, utilizando TypeScript para
 
 A interface foi projetada especificamente para uso em trânsito, focando em botões amplos, alto contraste e facilidade de leitura para os motoristas [9]. O fluxo de navegação completo foi prototipado no Figma.
 
-*   **Link público para o Figma:** [Acesse o Protótipo do ReciclaRota Mobile](https://www.figma.com/file/exemplo-link-publico-do-seu-projeto)
+*   **Link público para o Figma:** [Acesse o Protótipo do ReciclaRota Mobile](https://www.figma.com/design/yxRpxcZeoEDDvUYFYYDNit/mapa-de-telas?node-id=0-1&t=WyZQYUJVqSYX72jR-1)
 
 > 💡 **Fluxo de Navegação:** O protótipo demonstra o percurso completo do operador desde a autenticação, seleção de rota, visualização do mapa interativo com pontos de coleta e fluxo de preenchimento offline do formulário de coletas.
 
