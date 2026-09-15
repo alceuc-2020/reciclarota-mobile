@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-09-15T00:00:00.000Z" agent="GeminiNotebook" version="21.0.0" type="device">
+  <diagram id="ER_Diagram_ReciclaRota" name="Modelagem Banco de Dados ReciclaRota">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="entity_veiculo" value="VEICULO" style="swipe;html=1;whiteSpace=wrap;overview=1;fillColor=#1B365D;fontColor=#FFFFFF;fontStyle=1;align=center;verticalAlign=middle;fontSize=14;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="100" width="220" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_veiculo_fields" value="• &lt;b&gt;id&lt;/b&gt;: INT &lt;font color=&quot;#D97706&quot;&gt;&lt;b&gt;[PK]&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;• &lt;b&gt;placa&lt;/b&gt;: VARCHAR(10)&lt;br/&gt;• &lt;b&gt;motorista&lt;/b&gt;: VARCHAR(100)" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#F8FAFC;strokeColor=#94A3B8;fontSize=12;align=left;spacingLeft=8;spacingRight=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="80" y="135" width="220" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_rota" value="ROTA" style="swipe;html=1;whiteSpace=wrap;overview=1;fillColor=#1B365D;fontColor=#FFFFFF;fontStyle=1;align=center;verticalAlign=middle;fontSize=14;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="440" y="100" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_rota_fields" value="• &lt;b&gt;id&lt;/b&gt;: INT &lt;font color=&quot;#D97706&quot;&gt;&lt;b&gt;[PK]&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;• &lt;b&gt;data&lt;/b&gt;: DATE&lt;br/&gt;• &lt;b&gt;status&lt;/b&gt;: VARCHAR(20)&lt;br/&gt;• &lt;b&gt;veiculo_id&lt;/b&gt;: INT &lt;font color=&quot;#2563EB&quot;&gt;&lt;b&gt;[FK]&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#F8FAFC;strokeColor=#94A3B8;fontSize=12;align=left;spacingLeft=8;spacingRight=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="440" y="135" width="220" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_ponto" value="PONTO_COLETA" style="swipe;html=1;whiteSpace=wrap;overview=1;fillColor=#1B365D;fontColor=#FFFFFF;fontStyle=1;align=center;verticalAlign=middle;fontSize=14;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="360" width="220" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_ponto_fields" value="• &lt;b&gt;id&lt;/b&gt;: INT &lt;font color=&quot;#D97706&quot;&gt;&lt;b&gt;[PK]&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;• &lt;b&gt;nome&lt;/b&gt;: VARCHAR(100)&lt;br/&gt;• &lt;b&gt;latitude&lt;/b&gt;: DOUBLE&lt;br/&gt;• &lt;b&gt;longitude&lt;/b&gt;: DOUBLE" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#F8FAFC;strokeColor=#94A3B8;fontSize=12;align=left;spacingLeft=8;spacingRight=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="80" y="395" width="220" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_registro" value="REGISTRO_COLETA" style="swipe;html=1;whiteSpace=wrap;overview=1;fillColor=#1B365D;fontColor=#FFFFFF;fontStyle=1;align=center;verticalAlign=middle;fontSize=14;rounded=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="440" y="360" width="250" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="entity_registro_fields" value="• &lt;b&gt;id&lt;/b&gt;: INT &lt;font color=&quot;#D97706&quot;&gt;&lt;b&gt;[PK]&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;• &lt;b&gt;status_visita&lt;/b&gt;: VARCHAR(20)&lt;br/&gt;• &lt;b&gt;peso_estimado_kg&lt;/b&gt;: FLOAT&lt;br/&gt;• &lt;b&gt;rota_id&lt;/b&gt;: INT &lt;font color=&quot;#2563EB&quot;&gt;&lt;b&gt;[FK]&lt;/b&gt;&lt;/font&gt;&lt;br/&gt;• &lt;b&gt;ponto_coleta_id&lt;/b&gt;: INT &lt;font color=&quot;#2563EB&quot;&gt;&lt;b&gt;[FK]&lt;/b&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fillColor=#F8FAFC;strokeColor=#94A3B8;fontSize=12;align=left;spacingLeft=8;spacingRight=8;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="440" y="395" width="250" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_veiculo_rota" value="Possui (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F172A;strokeWidth=2;fontSize=11;fontStyle=1;" edge="1" parent="1" source="entity_veiculo" target="entity_rota">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_veiculo_rota_s" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_veiculo_rota">
+          <mxGeometry x="-0.8" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_veiculo_rota_t" value="N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_veiculo_rota">
+          <mxGeometry x="0.8" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_rota_registro" value="Contém (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F172A;strokeWidth=2;fontSize=11;fontStyle=1;" edge="1" parent="1" source="entity_rota" target="entity_registro">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_rota_registro_s" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_rota_registro">
+          <mxGeometry x="-0.8" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_rota_registro_t" value="N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_rota_registro">
+          <mxGeometry x="0.8" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_ponto_registro" value="Registrado Em (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#0F172A;strokeWidth=2;fontSize=11;fontStyle=1;" edge="1" parent="1" source="entity_ponto" target="entity_registro">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_ponto_registro_s" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_ponto_registro">
+          <mxGeometry x="-0.8" relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_ponto_registro_t" value="N" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=11;fontStyle=1;" vertex="1" connectable="0" parent="rel_ponto_registro">
+          <mxGeometry x="0.8" relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

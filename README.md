@@ -118,7 +118,8 @@ A persistência de dados do **ReciclaRota Mobile** é estruturada de forma híbr
                            +-------------------------+
 ```
 
-- **Link público da modelagem:** [Acesse o Diagrama do Banco no Diagrams.net/Draw.io](https://app.diagrams.net/#Gexemplo-link-diagrama)
+
+![Diagrama do Banco de Dados](assets/diagrama-banco-de-dados-reciclarota.png)
 
 ---
 
