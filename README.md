@@ -35,11 +35,11 @@ A interface foi projetada especificamente para uso em trânsito, focando em bot�
 ### Mapa de Telas
 Caso queira conferir a exportação estática de todas as telas unificadas em um fluxo:
 
-![Mapa de Telas ReciclaRota Mobile](assets/mapa-de-telas.png)
+![Mapa de Telas ReciclaRota Mobile](assets/mapa_de_telas_reciclarota.png)
 
-## Mapa de Rotas
+### Mapa de Rotas
 
--**Link público para o Figma:** [Acesse o Mapa de Rotas no Figma](https://www.figma.com/board/VVBXCsn4tZnIXHPiwoun8Y/Sem-t%C3%ADtulo?node-id=3-2&t=BUTX615d14olNLJZ-1)
+- **Link público para o Figma:** [Acesse o Mapa de Rotas no Figma](https://www.figma.com/board/VVBXCsn4tZnIXHPiwoun8Y/Sem-t%C3%ADtulo?node-id=3-2&t=BUTX615d14olNLJZ-1)
 ---
 
 ## Modelagem do Banco de Dados
