@@ -28,18 +28,15 @@ O aplicativo é desenvolvido com React Native e Expo, utilizando TypeScript para
 
 A interface foi projetada especificamente para uso em trânsito, focando em botões amplos, alto contraste e facilidade de leitura para os motoristas. O fluxo de navegação completo foi prototipado no Figma.
 
-- **Link público para o Figma:** [Acesse o Protótipo do ReciclaRota Mobile no Figma](https://www.figma.com/design/yxRpxcZeoEDDvUYFYYDNit/mapa-de-telas?node-id=0-1&t=n6UwnGPE669rCgJe-1)
+- **Link público para o Figma:** [Acesse o Protótipo do ReciclaRota Mobile no Figma](https://www.figma.com/file/COLE_AQUI_SEU_LINK_PUBLICO_DO_FIGMA)
 
 > 💡 **Fluxo de Navegação:** O protótipo demonstra o percurso completo do operador desde a autenticação, seleção de rota, visualização do mapa interativo com pontos de coleta e fluxo de preenchimento offline do formulário de coletas.
 
 ### Mapa de Telas
 Caso queira conferir a exportação estática de todas as telas unificadas em um fluxo:
 
-![Mapa de Telas ReciclaRota Mobile](assets/mapa_de_telas_reciclarota.png)
+![Mapa de Telas ReciclaRota Mobile](assets/mapa-de-telas.png)
 
-### Mapa de Rotas
-
-- **Link público para o Figma:** [Acesse o Mapa de Rotas no Figma](https://www.figma.com/board/VVBXCsn4tZnIXHPiwoun8Y/Sem-t%C3%ADtulo?node-id=3-2&t=BUTX615d14olNLJZ-1)
 ---
 
 ## Modelagem do Banco de Dados
@@ -121,8 +118,7 @@ A persistência de dados do **ReciclaRota Mobile** é estruturada de forma híbr
                            +-------------------------+
 ```
 
-
-![Diagrama do Banco de Dados](assets/diagrama-banco-de-dados-reciclarota.png)
+- **Link público da modelagem:** [Acesse o Diagrama do Banco no Diagrams.net/Draw.io](https://app.diagrams.net/#Gexemplo-link-diagrama)
 
 ---
 
@@ -135,9 +131,9 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 | Sprint | Duração Prevista | Funcionalidades / Entregas Focadas | Status |
 | :--- | :--- | :--- | :--- |
 | **Sprint 1** | Semanas 1 e 2 | Setup inicial do Expo + TypeScript; Criação da estrutura de diretórios do Atomic Design; Desenvolvimento dos primeiros Átomos (StatusBadge, Buttons). | **100% Concluído** ✅ |
-| **Sprint 2** | Semanas 3 e 4 | Criação das telas de Login e Dashboard de rotas; Navegação tipada instalada; Estado global de autenticação com Zustand. | **Em progresso** 🚀 |
-| **Sprint 3** | Semanas 5 e 6 | Integração com Mapas nativos; Criação do Card de Ponto de Coleta (Molécula); Persistência offline de dados de rota via AsyncStorage. | **Estrutura de Molécula/Organismo e Persistência criadas** 🌟 |
-| **Sprint 4** | Semanas 7 e 8 | Criação do formulário de coleta; Implementação da fila de sincronização offline e verificação ativa de rede (NetInfo). | **Fila local e pesagem simulada concluídas** |
+| **Sprint 2** | Semanas 3 e 4 | Criação das telas de Login e Dashboard de rotas; Navegação tipada instalada; Estado global de autenticação com Zustand. | **100% Concluído** ✅ |
+| **Sprint 3** | Semanas 5 e 6 | Integração com Mapas nativos; Criação do Card de Ponto de Coleta (Molécula); Persistência offline de dados de rota via AsyncStorage. | **100% Concluído** ✅ |
+| **Sprint 4** | Semanas 7 e 8 | Criação do formulário de coleta; Implementação da fila de sincronização offline e verificação ativa de rede (NetInfo). | **100% Concluído** ✅ |
 | **Sprint 5** | Semanas 9 e 10 | Conexão definitiva com a API Laravel remota; Testes completos em simuladores; Polimento de interface e geração de Build de produção (APK). | Planejado |
 
 ### Metas por Checkpoints da Disciplina
@@ -145,3 +141,24 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 - **Checkpoint 1 (Sprints 1 e 2):** Estrutura e padrões visuais funcionais, componentes de interface bem segmentados com Atomic Design e navegação fluida de login.
 - **Checkpoint 2 (Sprints 3 e 4):** Persistência offline-first em pleno funcionamento; capacidade de coletar e navegar sem conexão de dados ativa.
 - **Checkpoint 3 (Sprint 5):** Sincronização final de dados com o backend centralizado e fechamento da build de produção do app móvel.
+
+
+---
+
+## Atualizações desde o último checkpoint
+
+### 🎥 Demonstração em Vídeo (Até 1 min)
+- [Assista ao vídeo de demonstração navegando por todas as telas do aplicativo](COLE_AQUI_O_LINK_DO_SEU_VIDEO_NO_YOUTUBE)
+
+### 🛠️ Recursos dos Módulos Anteriores Aplicados
+- **Expo Router:** Configuração de roteamento baseado em arquivos dentro da pasta `src/app/`, utilizando o arquivo `_layout.tsx` para definir e padronizar o cabeçalho (`headerStyle`, `headerTintColor`, `title`) das 3 telas (`index.tsx`, `routes.tsx`, `collection.tsx`).
+- **Estilização com StyleSheet:** Estilização responsiva das 3 telas principais do aplicativo.
+- **Gerenciamento de Estado com Zustand e AsyncStorage:** Estado global e persistência no armazenamento físico local do dispositivo para controle das rotas ativas e da fila de sincronização offline (`pendingSyncQueue`).
+- **TypeScript:** Tipagem estática rigorosa para os modelos de dados e interfaces de propriedades (`Point`, `StatusBadgeProps`, `PointCardProps`).
+
+### 🧩 Conceitos de Boas Práticas para Criação de Componentes Reutilizáveis
+- **Atomic Design:** Organização modular dos componentes personalizados na pasta `src/components/`:
+  - **Átomo (`StatusBadge`):** Componente focado na exibição visual do status da coleta (`PENDING` ou `COMPLETED`).
+  - **Molécula (`PointCard`):** Componente reutilizável que combina o `StatusBadge` com informações do ecoponto e ação de toque (`onPress`).
+- **Responsabilidade Única e Desacoplamento:** Cada componente lida estritamente com sua apresentação, recebendo dados via `props` sem acoplamento direto com fontes de dados externas.
+- **Mocks Organizados:** Isolamento dos dados simulados em `src/mocks/routesData.ts` para popular a interface de forma limpa.
