@@ -1,34 +1,54 @@
 import React, { useState } from 'react';
 import {
-	View,
+	Alert,
+	Platform,
+	StyleSheet,
 	Text,
 	TextInput,
 	TouchableOpacity,
-	StyleSheet,
+	View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
 	const router = useRouter();
-	const [driverCode, setDriverCode] = useState('MOT-102');
+	const [driverCode, setDriverCode] = useState('');
+	const [error, setError] = useState('');
+
+	const handleLogin = () => {
+		if (!driverCode.trim()) {
+			const mensagem = 'Por favor, informe o código do motorista!';
+			setError(mensagem);
+
+			if (Platform.OS === 'web') {
+				window.alert(mensagem);
+			} else {
+				Alert.alert('Atenção', mensagem);
+			}
+			return;
+		}
+
+		setError('');
+		router.push('/routes');
+	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>ReciclaRota</Text>
-			<Text style={styles.subtitle}>Entre com seu código de motorista</Text>
+			<Text style={styles.subtitle}>Informe seu código de motorista para continuar.</Text>
 			<TextInput
-				style={styles.input}
+				style={[styles.input, error ? styles.inputError : null]}
 				value={driverCode}
-				onChangeText={setDriverCode}
+				onChangeText={(value) => {
+					setDriverCode(value);
+					if (error) setError('');
+				}}
 				placeholder="Código do motorista"
-				autoCapitalize="characters"
+				autoCapitalize="none"
 				accessibilityLabel="Código do motorista"
 			/>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => router.push('/home')}
-				accessibilityRole="button"
-			>
+			{error ? <Text style={styles.errorText}>{error}</Text> : null}
+			<TouchableOpacity style={styles.button} onPress={handleLogin}>
 				<Text style={styles.buttonText}>Entrar</Text>
 			</TouchableOpacity>
 		</View>
@@ -61,6 +81,17 @@ const styles = StyleSheet.create({
 		borderColor: '#d1d5db',
 		borderRadius: 8,
 		padding: 14,
+		marginBottom: 8,
+		fontSize: 16,
+	},
+	inputError: {
+		borderColor: '#dc2626',
+		borderWidth: 2,
+	},
+	errorText: {
+		color: '#dc2626',
+		fontSize: 13,
+		fontWeight: 'bold',
 		marginBottom: 16,
 	},
 	button: {
@@ -68,6 +99,7 @@ const styles = StyleSheet.create({
 		padding: 16,
 		borderRadius: 8,
 		alignItems: 'center',
+		marginTop: 8,
 	},
 	buttonText: {
 		color: '#fff',

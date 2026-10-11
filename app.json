@@ -2,6 +2,7 @@
   "expo": {
     "name": "reciclarota-mobile",
     "slug": "reciclarota-mobile",
+    "scheme": "reciclarota",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
