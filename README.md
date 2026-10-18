@@ -148,7 +148,7 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 ## Atualizações desde o último checkpoint
 
 ### 🎥 Demonstração em Vídeo (Até 1 min)
-- [Assista ao vídeo de demonstração navegando por todas as telas do aplicativo](COLE_AQUI_O_LINK_DO_SEU_VIDEO_NO_YOUTUBE)
+- [Assista ao vídeo de demonstração navegando por todas as telas do aplicativo](https://youtu.be/stNuHHzunqM)
 
 ### 🛠️ Recursos dos Módulos Anteriores Aplicados
 - **Expo Router:** Configuração de roteamento baseado em arquivos dentro da pasta `src/app/`, utilizando o arquivo `_layout.tsx` para definir e padronizar o cabeçalho (`headerStyle`, `headerTintColor`, `title`) das 3 telas (`index.tsx`, `routes.tsx`, `collection.tsx`).
