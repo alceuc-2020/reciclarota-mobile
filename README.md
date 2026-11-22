@@ -7,10 +7,10 @@ O aplicativo adota uma abordagem  **Offline-First** . Como a coleta ocorre em tr
 ## Sobre o App
 O aplicativo é desenvolvido com React Native e Expo, utilizando TypeScript para tipagem estática e segurança do código. A arquitetura de componentes visuais segue estritamente a metodologia do  **Atomic Design**  (separação modular em Átomos, Moléculas, Organismos e Templates) para promover o reaproveitamento máximo de código.
 ### Funcionalidades Básicas (Checklist de Requisitos)
-*  [ ]  **Autenticação de Operadores:**  Login integrado e persistente para identificar o motorista e o veículo associado.
-*  [x]  **Visualização de Rotas do Dia:**  Exibição detalhada dos pontos ecológicos de coleta ordenados para otimização do trajeto.  *(Implementado com o Organismo RouteList e a Molécula PointCard!)*
-*  [x]  **Registro Offline de Coletas:**  Cadastro local da quantidade e tipo de resíduo coletado (peso em kg por categoria: plástico, metal, papel, vidro) sem dependência de rede.  *(Implementado via alerta de pesagem simulada salvando dados no estado!)*
-*  [/]  **Fila de Sincronização Assíncrona:**  Gerenciamento de estado global com Zustand persistido no AsyncStorage para envio automático em segundo plano.  *(Fila local pendingSyncQueue e persistência física com AsyncStorage já totalmente configuradas!)*
+*  [x]  **Autenticação de Operadores:**  Login com validação de códigos autorizados (`MOT-01`, `MOT-02`, `REC-102`), exibição de alertas para entradas inválidas e isolamento dos dados salvos por conta no dispositivo.
+*  [x]  **Visualização de Rotas do Dia:**  Exibição detalhada dos pontos ecológicos de coleta ordenados para otimização do trajeto, com botão **"Novo Dia"** para reiniciar a rota apenas do motorista logado.  *(Implementado com `routes.tsx`, `PointCard` e `StatusBadge`!)*
+*  [x]  **Registro Offline de Coletas:**  Cadastro local do peso coletado em kg (com seletor incremental, atalhos rápidos e validação de peso maior que zero) sem dependência de rede, salvando o status `COMPLETED` no estado isolado da conta.
+*  [/]  **Fila de Sincronização Assíncrona:**  Gerenciamento de estado global com Zustand persistido no AsyncStorage para envio automático em segundo plano.  *(Fila local `pendingSyncQueue` por motorista e persistência física com AsyncStorage já totalmente configuradas!)*
 *  [ ]  **Registro de Ocorrências:**  Envio de alertas rápidos sobre lixeiras depredadas, vias obstruídas ou ausência de material reciclável no ponto.
 ### Funcionalidades Adicionais (Trabalhos Futuros)
 *  [ ]  **Navegação GPS Ativa:**  Integração com mapas locais (Google Maps/Apple Maps) para navegação dinâmica no trânsito.
@@ -31,48 +31,45 @@ Caso queira conferir a exportação estática de todas as telas unificadas em um
 ## Modelagem do Banco de Dados
 A persistência de dados do  **ReciclaRota Mobile**  é estruturada de forma híbrida para garantir operação ininterrupta (Offline-first) conectando-se assincronamente a uma API centralizada.
 ### 1. Implementação Local (Dispositivo Móvel)
-*   **Gerenciador de Estado:**   **Zustand**  com middleware persist.
-*   **Armazenamento Físico:**  @react-native-async-storage/async-storage para persistir as rotas e fila de sincronização.
-*   **Estruturas Otimizadas:**  Uso de Mapas e Conjuntos (Map/Set) no Zustand para acesso indexado rápido aos pontos de rota, utilizando serializadores customizados para salvamento JSON no armazenamento do celular.
+*   **Gerenciador de Estado:**   **Zustand**  com middleware `persist`.
+*   **Armazenamento Físico:**  `@react-native-async-storage/async-storage` para persistir as rotas e fila de sincronização.
+*   **Isolamento por Conta:**  O estado global (`useRouteStore.ts`) mantém o mapa `accountsData` indexado pelo código do motorista (`currentDriverCode`), garantindo que `MOT-01`, `MOT-02` e `REC-102` tenham suas próprias rotas (`activeRoute`) e filas de sincronização (`pendingSyncQueue`) independentes.
 #### Schema JSON do Estado Local Implementado:
 ```json
 {
   "state": {
-    "activeRoute": {
-      "id": "rota-seletiva-centro-102",
-      "date": "2026-09-07",
-      "vehiclePlate": "ABC-1234",
-      "points": [
-        {
-          "id": "1",
-          "name": "Ecoponto Rápido - Praça Central",
-          "latitude": -25.39,
-          "longitude": -51.46,
-          "status": "COMPLETED",
-          "weightKg": 45
+    "currentDriverCode": "MOT-01",
+    "accountsData": {
+      "MOT-01": {
+        "activeRoute": {
+          "points": [
+            {
+              "id": "1",
+              "name": "Ecoponto Rápido - Praça Central",
+              "status": "COMPLETED",
+              "weightKg": 45
+            },
+            {
+              "id": "2",
+              "name": "Condomínio Residencial Green",
+              "status": "PENDING",
+              "weightKg": 0
+            }
+          ]
         },
-        {
-          "id": "2",
-          "name": "Condomínio Residencial Green",
-          "latitude": -25.4,
-          "longitude": -51.47,
-          "status": "PENDING",
-          "weightKg": 120
-        }
-      ]
-    },
-    "pendingSyncQueue": [
-      {
-        "id": "1",
-        "name": "Ecoponto Rápido - Praça Central",
-        "status": "COMPLETED",
-        "weightKg": 45
+        "pendingSyncQueue": [
+          {
+            "id": "1",
+            "name": "Ecoponto Rápido - Praça Central",
+            "status": "COMPLETED",
+            "weightKg": 45
+          }
+        ]
       }
-    ]
+    }
   },
   "version": 0
 }
-
 ```
 ### 2. Implementação Remota (Servidor Central)
 *   **Backend:**  API REST desenvolvida em Laravel 10.
@@ -126,10 +123,13 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 * [x] **Sprint 1:** Setup inicial do Expo + TypeScript; criação da estrutura de diretórios do Atomic Design em `src/components/`; desenvolvimento do Átomo `StatusBadge`.
 * [x] **Sprint 2:** Configuração do Expo Router (`src/app/_layout.tsx`), criação das 3 telas principais (`index.tsx`, `routes.tsx`, `collection.tsx`) e estado global com Zustand.
 * [x] **Sprint 3:** Criação da Molécula `PointCard` combinando `StatusBadge` com informações do ecoponto e ação de toque (`onPress`), além da persistência local via `AsyncStorage`.
-* [x] **Sprint 4:** Registro local de coleta com atualização de status (`PENDING` / `COMPLETED`) e armazenamento na fila de sincronização offline (`pendingSyncQueue`).
+* [x] **Sprint 4:** Registro local de coleta com atualização de status (`PENDING` / `COMPLETED`), validação de peso (`> 0 kg`) e armazenamento na fila de sincronização offline (`pendingSyncQueue`).
 
 #### Novas Tarefas Adicionadas Durante o Projeto
 * [x] **Padronização de layout com Expo Router (`_layout.tsx`):** Configuração centralizada de cabeçalho (`headerStyle`, `headerTintColor`, `title`) para todas as telas da pilha de navegação.
+* [x] **Validação de acesso por código de motorista (`index.tsx`):** Bloqueio de login para campos vazios ou códigos não autorizados (`MOT-01`, `MOT-02`, `REC-102`), com alertas compatíveis com Web (`window.alert`) e Mobile (`Alert.alert`).
+* [x] **Isolamento de dados por conta (`useRouteStore.ts`):** Persistência segmentada por motorista em `accountsData` no `AsyncStorage`, garantindo que as coletas de uma conta não alterem as demais.
+* [x] **Botão "Novo Dia" para reset de expediente (`routes.tsx`):** Funcionalidade com diálogo de confirmação para apagar apenas as coletas anteriores da conta logada e restaurar os pontos para `PENDING` (`weightKg: 0`).
 * [x] **Isolamento de dados simulados (`src/mocks/routesData.ts`):** Organização dos mocks de rotas e pontos de coleta para popular a interface de forma limpa e desacoplada.
 * [x] **Tipagem estrita com TypeScript:** Criação das interfaces `Point`, `StatusBadgeProps` e `PointCardProps` para garantir segurança e contrato claro entre componentes.
 * [x] **Fluxo de trabalho Git com Pull Requests:** Organização do desenvolvimento em branches separadas com abertura de PRs e merges controlados na branch `main`.

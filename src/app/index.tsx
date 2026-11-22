@@ -9,26 +9,43 @@ import {
 	View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useRouteStore } from '../states/useRouteStore'; // ajuste o caminho se necessário
 
 export default function LoginScreen() {
 	const router = useRouter();
 	const [driverCode, setDriverCode] = useState('');
 	const [error, setError] = useState('');
+	const setCurrentDriver = useRouteStore((state) => state.setCurrentDriver);
+
+	const VALID_DRIVER_CODES = ['MOT-01', 'MOT-02', 'REC-102'];
+
+	const showAlert = (mensagem: string) => {
+		if (Platform.OS === 'web') {
+			window.alert(mensagem);
+		} else {
+			Alert.alert('Atenção', mensagem);
+		}
+	};
 
 	const handleLogin = () => {
-		if (!driverCode.trim()) {
+		const code = driverCode.trim().toUpperCase();
+
+		if (!code) {
 			const mensagem = 'Por favor, informe o código do motorista!';
 			setError(mensagem);
+			showAlert(mensagem);
+			return;
+		}
 
-			if (Platform.OS === 'web') {
-				window.alert(mensagem);
-			} else {
-				Alert.alert('Atenção', mensagem);
-			}
+		if (!VALID_DRIVER_CODES.includes(code)) {
+			const mensagem = 'Código de motorista inválido. Verifique e tente novamente.';
+			setError(mensagem);
+			showAlert(mensagem);
 			return;
 		}
 
 		setError('');
+		setCurrentDriver(code);
 		router.push('/routes');
 	};
 
