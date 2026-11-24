@@ -15,7 +15,8 @@ export default function LoginScreen() {
 	const router = useRouter();
 	const [driverCode, setDriverCode] = useState('');
 	const [error, setError] = useState('');
-	const setCurrentDriver = useRouteStore((state) => state.setCurrentDriver);
+	const setCurrentDriver = (code: string) =>
+		useRouteStore.setState((state) => ({ ...state, currentDriver: code } as typeof state));
 
 	const VALID_DRIVER_CODES = ['MOT-01', 'MOT-02', 'REC-102'];
 
