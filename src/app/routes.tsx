@@ -19,14 +19,17 @@ export default function RoutesScreen() {
 	const activeRoute = useRouteStore((state) => state.activeRoute);
 	const setActiveRoute = useRouteStore((state) => state.setActiveRoute);
 	const clearRoute = useRouteStore((state) => state.clearRoute);
+	const logout = useRouteStore((state) => state.logout);
 
-	// Inicializa os pontos a partir do mock apenas se esta conta ainda não tiver rota salva
+	// Inicializa os pontos em aberto e zerados se esta conta ainda não tiver rota salva
 	useEffect(() => {
 		if (currentDriverCode && !activeRoute) {
 			setActiveRoute({
 				points: MOCK_POINTS.map((point) => ({
 					...point,
 					id: String(point.id),
+					status: 'PENDING',
+					weightKg: 0,
 				})),
 			});
 		}
@@ -62,6 +65,11 @@ export default function RoutesScreen() {
 		]);
 	};
 
+	const handleLogout = () => {
+		logout();
+		router.replace('/');
+	};
+
 	const points = activeRoute?.points ?? [];
 
 	return (
@@ -74,9 +82,15 @@ export default function RoutesScreen() {
 					) : null}
 				</View>
 
-				<TouchableOpacity style={styles.resetButton} onPress={handleResetDay}>
-					<Text style={styles.resetButtonText}>Novo Dia</Text>
-				</TouchableOpacity>
+				<View style={styles.headerActions}>
+					<TouchableOpacity style={styles.resetButton} onPress={handleResetDay}>
+						<Text style={styles.resetButtonText}>Novo Dia</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+						<Text style={styles.logoutButtonText}>Sair</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 
 			<FlatList
@@ -115,6 +129,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginBottom: 16,
 	},
+	headerActions: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 8,
+	},
 	title: {
 		marginBottom: 4,
 		fontSize: 24,
@@ -130,11 +149,24 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#dc2626',
 		paddingVertical: 8,
-		paddingHorizontal: 14,
+		paddingHorizontal: 12,
 		borderRadius: 8,
 	},
 	resetButtonText: {
 		color: '#dc2626',
+		fontSize: 13,
+		fontWeight: 'bold',
+	},
+	logoutButton: {
+		backgroundColor: '#f3f4f6',
+		borderWidth: 1,
+		borderColor: '#9ca3af',
+		paddingVertical: 8,
+		paddingHorizontal: 12,
+		borderRadius: 8,
+	},
+	logoutButtonText: {
+		color: '#374151',
 		fontSize: 13,
 		fontWeight: 'bold',
 	},
