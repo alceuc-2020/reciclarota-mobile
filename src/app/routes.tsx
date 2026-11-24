@@ -67,7 +67,11 @@ export default function RoutesScreen() {
 
 	const handleLogout = () => {
 		logout();
-		router.replace('/');
+		if (router.canDismiss()) {
+			router.dismissAll();
+		} else {
+			router.replace('/');
+		}
 	};
 
 	const points = activeRoute?.points ?? [];
