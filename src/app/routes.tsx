@@ -15,15 +15,15 @@ import { useRouteStore } from '../states/useRouteStore';
 
 export default function RoutesScreen() {
 	const router = useRouter();
-	const currentDriverCode = useRouteStore((state) => state.currentDriverCode);
 	const activeRoute = useRouteStore((state) => state.activeRoute);
 	const setActiveRoute = useRouteStore((state) => state.setActiveRoute);
 	const clearRoute = useRouteStore((state) => state.clearRoute);
 	const logout = useRouteStore((state) => state.logout);
+	const currentDriverCode = useRouteStore((state) => state.currentDriverCode);
 
-	// Inicializa os pontos em aberto e zerados se esta conta ainda não tiver rota salva
+	// Inicializa os pontos em aberto e zerados quando não houver rota salva
 	useEffect(() => {
-		if (currentDriverCode && !activeRoute) {
+		if (!activeRoute) {
 			setActiveRoute({
 				points: MOCK_POINTS.map((point) => ({
 					...point,
@@ -33,7 +33,7 @@ export default function RoutesScreen() {
 				})),
 			});
 		}
-	}, [currentDriverCode, activeRoute, setActiveRoute]);
+	}, [activeRoute, setActiveRoute]);
 
 	const executeReset = () => {
 		clearRoute();
