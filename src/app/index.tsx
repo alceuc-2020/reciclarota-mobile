@@ -9,14 +9,13 @@ import {
 	View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useRouteStore } from '../states/useRouteStore'; // ajuste o caminho se necessário
+import { useRouteStore } from '../states/useRouteStore';
 
 export default function LoginScreen() {
 	const router = useRouter();
 	const [driverCode, setDriverCode] = useState('');
 	const [error, setError] = useState('');
-	const setCurrentDriver = (code: string) =>
-		useRouteStore.setState((state) => ({ ...state, currentDriver: code } as typeof state));
+	const setCurrentDriver = useRouteStore((state) => state.setCurrentDriver);
 
 	const VALID_DRIVER_CODES = ['MOT-01', 'MOT-02', 'REC-102'];
 

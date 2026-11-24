@@ -13,13 +13,14 @@ import { useRouteStore } from '../states/useRouteStore';
 
 export default function CollectionScreen() {
 	const router = useRouter();
-	const { id } = useLocalSearchParams<{ id: string }>();
+	const { id } = useLocalSearchParams<{ id?: string | string[] }>();
+	const pointId = Array.isArray(id) ? id[0] : id;
 
 	const activeRoute = useRouteStore((state) => state.activeRoute);
 	const currentDriverCode = useRouteStore((state) => state.currentDriverCode);
 	const updatePointStatus = useRouteStore((state) => state.updatePointStatus);
 
-	const point = activeRoute?.points.find((p) => String(p.id) === String(id));
+	const point = activeRoute?.points.find((p) => String(p.id) === String(pointId));
 
 	const [weight, setWeight] = useState<number>(
 		typeof point?.weightKg === 'number' && point.weightKg > 0 ? point.weightKg : 45
@@ -51,7 +52,14 @@ export default function CollectionScreen() {
 	};
 
 	const handleConfirm = () => {
-		if (!id || !point) {
+		if (!currentDriverCode) {
+			const mensagem = 'Nenhum motorista autenticado. Faça login novamente.';
+			setError(mensagem);
+			showAlert('Erro', mensagem);
+			return;
+		}
+
+		if (!pointId || !point) {
 			const mensagem = 'Ponto de coleta não encontrado na rota ativa.';
 			setError(mensagem);
 			showAlert('Erro', mensagem);
@@ -70,9 +78,14 @@ export default function CollectionScreen() {
 
 		showAlert(
 			'Sucesso!',
-			`Coleta do ponto #${point.id} (${weight} kg) registrada offline para ${currentDriverCode ?? 'o motorista'}.`,
+			`Coleta do ponto #${point.id} (${weight} kg) registrada offline para ${currentDriverCode}.`,
 		);
-		router.back();
+
+		if (router.canGoBack()) {
+			router.back();
+		} else {
+			router.replace('/routes');
+		}
 	};
 
 	return (
