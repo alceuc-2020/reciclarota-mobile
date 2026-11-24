@@ -53,7 +53,7 @@ export default function LoginScreen() {
 	return (
 		<View style={styles.container}>
 			<Image
-				source={require('../../assets/reciclarota_logo.png')}
+				source={require('../../assets/logo.png')}
 				style={styles.logo}
 				resizeMode="contain"
 				accessibilityLabel="Logo do aplicativo ReciclaRota"
