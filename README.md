@@ -7,7 +7,7 @@ O aplicativo adota uma abordagem  **Offline-First** . Como a coleta ocorre em tr
 ## Sobre o App
 O aplicativo é desenvolvido com React Native e Expo, utilizando TypeScript para tipagem estática e segurança do código. A arquitetura de componentes visuais segue estritamente a metodologia do  **Atomic Design**  (separação modular em Átomos, Moléculas, Organismos e Templates) para promover o reaproveitamento máximo de código.
 ### Funcionalidades Básicas (Checklist de Requisitos)
-*  [x]  **Autenticação de Operadores e Troca de Conta:**  Login (`index.tsx`) com validação de códigos autorizados (`MOT-01`, `MOT-02`, `REC-102`), normalização do código digitado, alertas para entradas inválidas e chamada direta a `setCurrentDriver` para isolar e carregar os dados exclusivos da conta acessada.
+*  [x]  **Autenticação de Operadores, Troca de Conta e Identidade Visual:**  Tela de login (`index.tsx`) com logotipo oficial do aplicativo (`assets/reciclarota_logo.png`) exibido via componente `Image`, validação de códigos autorizados (`MOT-01`, `MOT-02`, `REC-102`), normalização do código digitado, alertas para entradas inválidas e chamada direta a `setCurrentDriver` para isolar e carregar os dados exclusivos da conta acessada.
 *  [x]  **Visualização de Rotas do Dia e Logout:**  Exibição dos pontos de coleta (`routes.tsx`, `PointCard` e `StatusBadge`) inicializados em aberto (`PENDING` e `0 kg`) por conta, exibição do motorista logado, botão **"Novo Dia"** para reiniciar apenas a rota da conta atual e botão **"Sair"** (`logout()` com `router.dismissAll()` / `router.replace('/')`) para alternar entre motoristas preservando os dados salvos.
 *  [x]  **Registro Offline de Coletas:**  Tela dedicada (`collection.tsx`) que lê o ponto da rota ativa da conta, oferece controle incremental de peso (`−` / `+` de 5 kg), campo numérico e atalhos rápidos (`5`, `15`, `30`, `45 kg`), validando motorista autenticado e peso maior que zero antes de gravar `COMPLETED` na conta.
 *  [/]  **Fila de Sincronização Assíncrona:**  Gerenciamento de estado global com Zustand persistido no AsyncStorage para envio automático em segundo plano.  *(Fila local `pendingSyncQueue` sem duplicidades por ponto e persistência física por conta com AsyncStorage já totalmente configuradas!)*
@@ -127,6 +127,7 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 * [x] **Sprint 5:** Configuração do perfil `apk` no `eas.json`, geração do arquivo instalável Android (`.apk`) via EAS e publicação da Release final no GitHub com o `.apk` anexado.
 
 #### Novas Tarefas Adicionadas Durante o Projeto
+* [x] **Identidade visual e logo do aplicativo (`assets/reciclarota_logo.png` e `index.tsx`):** Criação do logotipo oficial do ReciclaRota e exibição centralizada na tela de login utilizando o componente `Image` do React Native.
 * [x] **Padronização de layout com Expo Router (`_layout.tsx`):** Configuração centralizada de cabeçalho (`headerStyle`, `headerTintColor`, `title`) para todas as telas da pilha de navegação.
 * [x] **Validação de acesso e vínculo correto de sessão (`index.tsx`):** Bloqueio de login para campos vazios ou códigos não autorizados (`MOT-01`, `MOT-02`, `REC-102`), com alertas compatíveis com Web (`window.alert`) e Mobile (`Alert.alert`) e chamada oficial a `setCurrentDriver`.
 * [x] **Isolamento de dados por conta e clonagem de rotas (`useRouteStore.ts`):** Persistência segmentada por motorista em `accountsData` no `AsyncStorage`, inicialização zerada (`PENDING`, `0 kg`), fila `pendingSyncQueue` sem duplicidades e função `logout` preservando os dados das demais contas.
@@ -148,7 +149,7 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 --------------------------------------------------------------------------------
 
 ## Distribuição e Instalação (APK)
-* **Build Android via EAS:** Configurado o perfil `apk` no arquivo `eas.json` (`"buildType": "apk"`) e versionamento no `app.json` (`version` e `versionCode`), permitindo que o aplicativo rode diretamente em dispositivos Android sem depender do Expo Go.
+* **Build Android via EAS:** Configurado o perfil `apk` no arquivo `eas.json` (`"buildType": "apk"`), identidade visual (`assets/reciclarota_logo.png`) e versionamento no `app.json` (`version` e `versionCode`), permitindo que o aplicativo rode diretamente em dispositivos Android sem depender do Expo Go.
 * **Release no GitHub:** O arquivo `.apk` final está publicado na aba **Releases** do repositório para download e instalação direta.
 
 --------------------------------------------------------------------------------
@@ -160,9 +161,9 @@ O cronograma do projeto está organizado em 5 Sprints quinzenais ao longo de 10 
 *  [Assista ao vídeo de demonstração navegando por todas as telas do aplicativo](https://youtu.be/stNuHHzunqM)
 ### 🛠️ Recursos dos Módulos Anteriores Aplicados
 *   **Expo Router:**  Configuração de roteamento baseado em arquivos dentro da pasta src/app/, utilizando o arquivo _layout.tsx para definir e padronizar o cabeçalho (headerStyle, headerTintColor, title) das 3 telas (index.tsx, routes.tsx, collection.tsx).
-*   **Estilização com StyleSheet:**  Estilização responsiva das 3 telas principais do aplicativo.
+*   **Estilização com StyleSheet e Mídia Local:**  Estilização responsiva das 3 telas principais do aplicativo e exibição do logotipo oficial (`assets/reciclarota_logo.png`) na tela de login via componente `Image`.
 *   **Gerenciamento de Estado com Zustand e AsyncStorage:**  Estado global e persistência no armazenamento físico local do dispositivo para controle das rotas ativas e da fila de sincronização offline (pendingSyncQueue).
-*   **TypeScript:**  Tipagem estática rigorosa para os modelos de dados e interfaces de propriedades (Point, StatusBadgeProps, PointCardProps).
+*   **TypeScript:**  Tipagem estática rigorosa para os modelos de dados e interfaces de propriedades (CollectionPoint, ActiveRoute, Point, StatusBadgeProps, PointCardProps).
 ### 🧩 Conceitos de Boas Práticas para Criação de Componentes Reutilizáveis
 *   **Atomic Design:**  Organização modular dos componentes personalizados na pasta src/components/:
     *   **Átomo (StatusBadge):**  Componente focado na exibição visual do status da coleta (PENDING ou COMPLETED).

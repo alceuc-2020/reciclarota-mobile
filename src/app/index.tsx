@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
 	Alert,
+	Image,
 	Platform,
 	StyleSheet,
 	Text,
@@ -51,6 +52,12 @@ export default function LoginScreen() {
 
 	return (
 		<View style={styles.container}>
+			<Image
+				source={require('../../assets/reciclarota_logo.png')}
+				style={styles.logo}
+				resizeMode="contain"
+				accessibilityLabel="Logo do aplicativo ReciclaRota"
+			/>
 			<Text style={styles.title}>ReciclaRota</Text>
 			<Text style={styles.subtitle}>Informe seu código de motorista para continuar.</Text>
 			<TextInput
@@ -78,6 +85,13 @@ const styles = StyleSheet.create({
 		padding: 24,
 		justifyContent: 'center',
 		backgroundColor: '#f9fafb',
+	},
+	logo: {
+		width: 112,
+		height: 112,
+		alignSelf: 'center',
+		marginBottom: 16,
+		borderRadius: 24,
 	},
 	title: {
 		fontSize: 24,
